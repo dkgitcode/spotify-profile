@@ -7,7 +7,7 @@ const axios = require('axios');
 class App extends Component{
   constructor(props){
     super(props);
-    this.state = {display_name : "", profile_pic : 'https://synctrack.live/favicon.ico'}
+    this.state = {display_name : "", profile_pic : 'https://wallify.netlify.app/favicon.ico'}
   }
   render(){
     return(
@@ -57,7 +57,7 @@ class App extends Component{
 
     // Replace with your app's client ID, redirect URI and desired scopes
     const clientId = '3be56587b1674ecba36c995b7cdbdd03';
-    const redirectUri = "http://localhost:3000/";
+    const redirectUri = "https://wallify.netlify.app/";
     // const redirectUri = "http://localhost:3000/";
 
 
@@ -79,7 +79,7 @@ class App extends Component{
     })
     .then((response)=>{
       let data = response.data;
-      let profile_pic = 'https://synctrack.live/favicon.ico'
+      let profile_pic = 'https://wallify.netlify.app/favicon.ico'
 
       try{
         profile_pic = data.images[0].url
