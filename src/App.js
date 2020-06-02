@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 const axios = require('axios');
 
+
 class App extends Component{
   constructor(props){
     super(props);
@@ -13,7 +14,7 @@ class App extends Component{
       <div>
       <nav>
       <img src={this.state.profile_pic}/>
-      <p>{this.state.display_name}</p>
+      <p>{this.state.display_name} - mainstream score : {this.state.score}%</p>
       </nav>
       <div className='content'>
       <h1>your top artists</h1>
@@ -29,6 +30,7 @@ class App extends Component{
       )
   }
   componentDidMount(){
+    //extract token from the hash.
     const hash = window.location.hash
           .substring(1)
           .split("&")
@@ -41,7 +43,7 @@ class App extends Component{
           }, {});
 
 
-
+    //reset hash.
     window.location.hash = '';
     // Set token
 
@@ -50,7 +52,7 @@ class App extends Component{
 
     
 
-
+    //auth process variables.
     const authEndpoint = 'https://accounts.spotify.com/authorize';
 
     // Replace with your app's client ID, redirect URI and desired scopes
@@ -61,7 +63,7 @@ class App extends Component{
 
     let content = document.querySelector(".content");
 
-
+    // if not connected, add button to connect.
     if (!_token) {
       let url = `${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=` + encodeURIComponent('user-follow-modify playlist-modify-public playlist-modify-private user-follow-read playlist-read-private user-top-read user-library-modify user-read-currently-playing user-read-playback-state user-read-private user-read-recently-played user-read-email user-read-private user-modify-playback-state');
       content.innerHTML = `
@@ -71,7 +73,7 @@ class App extends Component{
 
 
     
-    // establish which user
+    // establish which user and set pfp.
     axios.get('https://api.spotify.com/v1/me', {
       headers: {'Authorization': 'Bearer ' + _token}
     })
@@ -85,7 +87,7 @@ class App extends Component{
       catch{
         console.log("no image found.")
       }
-      
+      //causes refresh because state changes
       this.setState({display_name : data.display_name, profile_pic : profile_pic, username : data.id})
     })
     .catch(function (error) {
@@ -100,7 +102,8 @@ class App extends Component{
 
 
 
-
+    // set the states for the token so that it has access from other methods.
+    // anonymous callback to make more method calls that use the token.
     this.setState({
       token : _token
     },()=>{
@@ -110,14 +113,17 @@ class App extends Component{
   }
 
   get_top_artists(){
+    // get card container for top artists div.
     let cards = document.querySelector("#top-artists");
-    axios.get('https://api.spotify.com/v1/me/top/artists', {
+    axios.get('https://api.spotify.com/v1/me/top/artists?limit=100&time_range=long_term', {
       headers: {'Authorization': 'Bearer ' + this.state.token}
     })
     .then((response)=>{
       let artists = response.data.items;
-
+      //for each artist, append to container
+      let score = 0;
       artists.forEach((el, i)=>{
+        score += el.popularity;
         cards.innerHTML += `
 <div class='card'>
 <div class='image-container'>
@@ -127,7 +133,8 @@ class App extends Component{
 <p class='sub-text'></p>
         `
       })
-      document.querySelector("nav").style.width = '2100px'
+      score = score/artists.length;
+      this.setState({score : score.toFixed(1)})
 
       console.log(document.querySelector("nav").style.width)
 
@@ -141,14 +148,17 @@ class App extends Component{
 
   }
   get_top_tracks(){
+    // get dom container for div.
     let cards = document.querySelector("#top-tracks");
-    axios.get('https://api.spotify.com/v1/me/top/tracks', {
+
+    //make call for top tracks for user
+    axios.get('https://api.spotify.com/v1/me/top/tracks?limit=100&time_range=long_term', {
       headers: {'Authorization': 'Bearer ' + this.state.token}
     })
     .then((response)=>{
-      let artists = response.data.items;
-
-      artists.forEach((el, i)=>{
+      let tracks = response.data.items;
+      // for each track, append a card element to the container
+      tracks.forEach((el, i)=>{
         cards.innerHTML += `
 <div class='card'>
 <div class='image-container'>
@@ -158,9 +168,10 @@ class App extends Component{
 <p class='sub-text'></p>
         `
       })
-      document.querySelector("nav").style.width = '2100px'
+      // make nav bar 2100px so it fits the screen. 10 cards * 400px.
+      document.querySelector("nav").style.width = '4000px'
 
-      console.log(document.querySelector("nav").style.width)
+
 
     })
     .catch(function (error) {
