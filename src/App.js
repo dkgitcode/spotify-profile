@@ -75,17 +75,7 @@ class App extends Component{
 <a class='connect-button' href='${url}'>Connect</a>
       `
     }
-    else{
-      setTimeout(()=>{
-        document.querySelectorAll("img").forEach(el =>{
-          el.src = `https://cors-anywhere.herokuapp.com/${el.src}`;
-          el.crossOrigin = "anonymous";
-        })
-
-        html2canvas(document.querySelector(".content"),{ allowTaint : true, onrendered : function (canvas) { } }).then(function(canvas) {
-    document.body.appendChild(canvas);
-    })},4000)
-    }
+    
 
     
 
@@ -192,7 +182,7 @@ class App extends Component{
 <div class='card-container'>
 <div class='card'>
 <div class='image-container'>
-<img crossorigin='anonymous' src='https://cors-anywhere.herokuapp.com/${el.album.images[0].url}'/>
+<img src='${el.album.images[0].url}'/>
 </div>
 <p class='main-text'>${i+1}. ${el.name}</p>
 <p class='sub-text'></p>
