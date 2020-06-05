@@ -1,8 +1,6 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "Montserrat", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -40,22 +38,31 @@ h1{
 	padding: 0em;
 	margin : 0;
 	color: white;
-	height: 460px;
-	width: 400px;
+	height: 200px;
+	width: 200px;
 	background-color: #2d2d2d;
-
 }
 .card p{
+	text-align: center;
+	padding: 0em;
+	margin-block-start: 0px;
+	margin-block-end: 0px;
+	margin: 0px;
+
+	font-size: 14px;
 	font-weight: bolder;
 }
 .card img{
-	width: 400px;
-	height: 400px;
+	width: 200px;
+	height: 200px;
 }
-
+.cards-container{
+	text-align: center;
+}
 .cards{
+	width: 1000px;
 	display : grid;
-	grid-template-columns: repeat(10, 1fr);
+	grid-template-columns: repeat(5, 1fr);
 }
 
 .connect-button{
@@ -71,8 +78,103 @@ h1{
 	text-transform: uppercase;
 	font-family: "Montserrat", sans-serif;
 }
+canvas{
+	display: none;
+}
+.tracks .card-container{
+	padding-bottom: .5em;
+}
+.tracks .card{
+	margin-left: calc(50% - 50px);
+	width: 140px;
+	height: 180px;
+	border-radius: 8px;
 
+}
+.tracks .card img{
+	border-top-right-radius: 8px;
+	border-top-left-radius: 8px;
+
+	width: 140px;
+	height: 140px;
+}
+.tracks .card p {
+	font-size: 12px;
+}
 .content{
+	margin-left : calc(50% - 500px);
+	margin-right : calc(50% - 500px);
+
 	padding-top: 4em;
 	text-align: center;
+}
+
+@media only screen and (max-width: 1000px) {
+
+	.cards{
+		transform: scale(.9);
+	}
+}
+@media only screen and (max-width: 900px) {
+	
+	.cards{
+		transform: scale(.8);
+	}
+}
+@media only screen and (max-width: 800px) {
+	
+	.cards{
+		transform: scale(.7);
+	}
+}
+@media only screen and (max-width: 700px) {
+	
+	.cards{
+		transform: scale(.6);
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	nav p{
+		font-size: 18px;
+	}
+	.card{
+	padding: 0em;
+	margin : 0;
+	color: white;
+	height: 80px;
+	width: 80px;
+	background-color: #2d2d2d;
+
+}
+.card img{
+	width: 80px;
+	height: 80px;
+}
+.content{
+	margin-left : calc(50% - 200px);
+	margin-right : calc(50% - 200px);
+
+
+
+	padding-top: 4em;
+	text-align: center;
+}
+
+
+
+	.cards{
+		transform: scale(.9);
+
+
+	width: 400px;
+	display : grid;
+	grid-template-columns: repeat(5, 1fr);
+}
+
+.tracks{
+	transform: scale(1);
+	grid-template-columns: repeat(2, 1fr);
+}
+
 }
