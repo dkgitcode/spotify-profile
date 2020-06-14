@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import $ from "jquery";
-import html2canvas from 'html2canvas';
 const axios = require('axios');
 
 
@@ -132,7 +131,7 @@ class App extends Component{
   get_top_artists(){
     // get card container for top artists div.
     let cards = document.querySelector("#top-artists");
-    axios.get('https://api.spotify.com/v1/me/top/artists?limit=100&time_range=long_term', {
+    axios.get('https://api.spotify.com/v1/me/top/artists?limit=100&time_range=short_term', {
       headers: {'Authorization': 'Bearer ' + this.state.token}
     })
     .then((response)=>{
@@ -171,7 +170,7 @@ class App extends Component{
     let cards = document.querySelector("#top-tracks");
 
     //make call for top tracks for user
-    axios.get('https://api.spotify.com/v1/me/top/tracks?limit=100&time_range=long_term', {
+    axios.get('https://api.spotify.com/v1/me/top/tracks?limit=100&time_range=short_term', {
       headers: {'Authorization': 'Bearer ' + this.state.token}
     })
     .then((response)=>{
